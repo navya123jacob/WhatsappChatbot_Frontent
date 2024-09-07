@@ -27,7 +27,7 @@ const Dashboard = () => {
             <div className="card card-profile"  >
               <div className="card-body">
             <h1>Welcome to your Dashboard, {userInfo.name}!</h1>
-            QR Code and other dashboard content
+            
         
         </div>
         </div>

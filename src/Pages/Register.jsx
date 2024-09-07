@@ -13,6 +13,7 @@ const Register = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [isOtpSent, setIsOtpSent] = useState(false);
@@ -22,6 +23,7 @@ const Register = () => {
     email: "",
     password: "",
     form: "",
+    phoneNumber: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [timer, setTimer] = useState(30);
@@ -31,7 +33,11 @@ const Register = () => {
   const [resendOtpMutation] = useResendOtpMutation();
   const [useQR, setUseQR] = useState(false);
 
-  const { data: qrData, error: qrError, isLoading: qrLoading } = useGenerateQRCodeQuery();
+  const {
+    data: qrData,
+    error: qrError,
+    isLoading: qrLoading,
+  } = useGenerateQRCodeQuery();
 
   useEffect(() => {
     if (userInfo) {
@@ -42,6 +48,10 @@ const Register = () => {
   const validateEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^[0-9]{10}$/;
+    return phoneRegex.test(phoneNumber);
   };
 
   const validatePassword = (password) => {
@@ -59,20 +69,29 @@ const Register = () => {
   };
 
   const validateForm = () => {
-    const newErrors = { name: "", email: "", password: "", form: "" };
+    const newErrors = {
+      name: "",
+      email: "",
+      password: "",
+      form: "",
+      phoneNumber: "",
+    };
     let isValid = true;
 
-    if (!validateName(name)) {
+    if (!name.trim() || !validateName(name)) {
       newErrors.name = "Name should contain only letters";
       isValid = false;
     }
-
-    if (!validateEmail(email)) {
+    if (!phoneNumber.trim() || !validatePhoneNumber(phoneNumber)) {
+      newErrors.phoneNumber = "Phone number must be 10 digits";
+      isValid = false;
+    }
+    if (!email.trim() || !validateEmail(email)) {
       newErrors.email = "Valid email is required";
       isValid = false;
     }
 
-    if (!validatePassword(password)) {
+    if (!password.trim() || !validatePassword(password)) {
       newErrors.password =
         "Password must be strong (6+ characters with uppercase, lowercase, digits, and special characters)";
       isValid = false;
@@ -91,9 +110,11 @@ const Register = () => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-
+  
     if (value && index < 3) {
       document.getElementById(`otp-${index + 1}`).focus();
+    } else if (!value && index > 0) {
+      document.getElementById(`otp-${index - 1}`).focus();
     }
   };
 
@@ -208,7 +229,7 @@ const Register = () => {
           overflow: "hidden",
         }}
       >
-        <Header/>
+        <Header />
         <div
           style={{
             backgroundImage: "url(/restaurant2.jpg)",
@@ -267,14 +288,18 @@ const Register = () => {
             >
               <h2 className="fw-bold mb-5">Register</h2>
               <div className="d-flex justify-content-between mb-4">
-                <button 
-                  className={`btn ${useQR ? "btn-light" : "btn-outline-light"} w-50 me-2`} 
+                <button
+                  className={`btn ${
+                    useQR ? "btn-light" : "btn-outline-light"
+                  } w-50 me-2`}
                   onClick={() => setUseQR(false)}
                 >
                   Register via Form
                 </button>
-                <button 
-                  className={`btn ${useQR ? "btn-outline-light" : "btn-light"} w-50`} 
+                <button
+                  className={`btn ${
+                    useQR ? "btn-outline-light" : "btn-light"
+                  } w-50`}
                   onClick={() => setUseQR(true)}
                 >
                   Register via WhatsApp
@@ -328,8 +353,21 @@ const Register = () => {
                         onClick={togglePasswordVisibility}
                       ></i>
                       {errors.password && (
+                        <small className="text-danger">{errors.password}</small>
+                      )}
+                    </div>
+                    <div className="form-outline mb-4">
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Phone Number"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                      />
+                      <label className="form-label">Phone Number</label>
+                      {errors.phoneNumber && (
                         <small className="text-danger">
-                          {errors.password}
+                          {errors.phoneNumber}
                         </small>
                       )}
                     </div>
@@ -409,7 +447,12 @@ const Register = () => {
                     <p>Error loading QR code.</p>
                   ) : (
                     <>
-                      <img src={qrData.qrCodeDataURL} alt="QR Code" className="img-fluid" style={{ maxWidth: "200px" }} />
+                      <img
+                        src={qrData.qrCodeDataURL}
+                        alt="QR Code"
+                        className="img-fluid"
+                        style={{ maxWidth: "200px" }}
+                      />
 
                       <p className="mt-3">
                         Scan the QR code with WhatsApp to register.
@@ -419,8 +462,7 @@ const Register = () => {
                 </div>
               )}
               <p className="mt-3">
-                Already have an account?{" "}
-                <Link to="/login">Login</Link>
+                Already have an account? <Link to="/login">Login</Link>
               </p>
             </div>
           </div>

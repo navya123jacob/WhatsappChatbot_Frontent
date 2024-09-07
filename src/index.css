@@ -4,6 +4,13 @@
   color: white;
 }
 
+html, body {
+  height: 100%; 
+  margin: 0;
+  padding: 0; 
+  overflow-x: hidden; 
+  overflow-y: hidden; 
+}
 .custom-input::placeholder {
   color: white;
   opacity: 1;
@@ -422,7 +429,7 @@
             
             background-size: cover;
             background-position: center;
-            min-height: 100vh;
+            height:100vh;
             display: flex;
             flex-direction: column;
           }

@@ -4,6 +4,7 @@ import Login from './Pages/Login';
 import Dashboard from './Pages/Dashboard';
 import Register from './Pages/Register';
 import ProtectedRoute from './Components/ProtectedRoute'
+import NotFoundPage from './Pages/NotFound';
 function App() {
     return (
         <Router>
@@ -14,6 +15,7 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                     <Route path="/" element={<Dashboard />} />
                 </Route>
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
     );
