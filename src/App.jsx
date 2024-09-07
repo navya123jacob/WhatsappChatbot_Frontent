@@ -5,8 +5,11 @@ import Dashboard from './Pages/Dashboard';
 import Register from './Pages/Register';
 import ProtectedRoute from './Components/ProtectedRoute'
 import NotFoundPage from './Pages/NotFound';
+import './index.css';
+
 function App() {
     return (
+        
         <Router>
             <Routes>
                 <Route path="/login" element={<Login />} />
@@ -18,6 +21,7 @@ function App() {
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </Router>
+       
     );
 }
 

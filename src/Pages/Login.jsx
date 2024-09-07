@@ -84,25 +84,14 @@ const Login = () => {
   };
 
   return (
-    <section
-      className="text-center position-relative"
-      style={{ minHeight: "100vh", overflow: "hidden" }}
+    <div
+      className="project-page-container "
+     
+       style={{
+          backgroundImage: "url(/restaurant2.jpg)"}}
     >
       <Header />
-      <div
-        style={{
-          backgroundImage: "url(/restaurant2.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: 1,
-        }}
-      ></div>
-
+      
       <div
         className="d-flex justify-content-center align-items-center"
         style={{
@@ -131,7 +120,7 @@ const Login = () => {
               backgroundPosition: "bottom",
               borderTopLeftRadius: "15px",
               borderBottomLeftRadius: "15px",
-              height: "450px",
+              height: "465px",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -145,7 +134,7 @@ const Login = () => {
               padding: "2rem",
             }}
           >
-            <h2 className="fw-bold mb-5">Login</h2>
+            <h2 className="fw-bold mb-2 text-center">Login</h2>
             <div className="d-flex justify-content-between mb-4">
                 <button
                   className={`btn ${
@@ -263,7 +252,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

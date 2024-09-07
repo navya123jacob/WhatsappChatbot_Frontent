@@ -79,21 +79,21 @@ const Register = () => {
     let isValid = true;
 
     if (!name.trim() || !validateName(name)) {
-      newErrors.name = "Name should contain only letters";
+      newErrors.name = ":Name should contain only letters";
       isValid = false;
     }
     if (!phoneNumber.trim() || !validatePhoneNumber(phoneNumber)) {
-      newErrors.phoneNumber = "Phone number must be 10 digits";
+      newErrors.phoneNumber = ":Phone number must be 10 digits";
       isValid = false;
     }
     if (!email.trim() || !validateEmail(email)) {
-      newErrors.email = "Valid email is required";
+      newErrors.email = ":Valid email is required";
       isValid = false;
     }
 
     if (!password.trim() || !validatePassword(password)) {
       newErrors.password =
-        "Password must be strong (6+ characters with uppercase, lowercase, digits, and special characters)";
+        ":Password must be strong (6+ characters with uppercase, lowercase, digits, and special characters)";
       isValid = false;
     }
 
@@ -272,7 +272,7 @@ const Register = () => {
                 backgroundPosition: "bottom",
                 borderTopLeftRadius: "15px",
                 borderBottomLeftRadius: "15px",
-                height: "560px",
+                height: "690px",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
@@ -286,7 +286,7 @@ const Register = () => {
                 padding: "2rem",
               }}
             >
-              <h2 className="fw-bold mb-5">Register</h2>
+              <h2 className="fw-bold mb-2 text-center">Register</h2>
               <div className="d-flex justify-content-between mb-4">
                 <button
                   className={`btn ${
